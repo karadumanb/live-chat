@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
 
     def create
         message = current_user.messages.build(message_params)
+        #build(alias of new) won't "create" a record in database, just create a new object in memory so that the view can take this object and display something, especially for a form.
         if message.save
             ActionCable.server.broadcast "chatroom_channel",
                         mod_message: message_render(message)
